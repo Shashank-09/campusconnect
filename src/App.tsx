@@ -5,6 +5,7 @@ import SigninForm from './_auth/forms/SigninForm';
 import { Home } from './_root/pages';
 import SignupForm from './_auth/forms/SignupForm';
 import AuthLayout from './_auth/AuthLayout';
+import RootLayout from './_root/RootLayout';
 
 const App = () => {
   return (
@@ -17,6 +18,9 @@ const App = () => {
           </Route>
           
           {/* PRIVATE ROUTES */}
+          <Route element={<RootLayout/>}>
+
+          </Route>
           <Route index element={<Home/>}/>
 
           
