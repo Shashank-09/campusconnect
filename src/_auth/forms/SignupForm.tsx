@@ -36,7 +36,7 @@ const SignupForm = () => {
     const newUser = await createUserAccount(values);
 
     console.log(newUser);
-  }
+  }  
   return (
     <Form {...form}>
       <div className="sm:w-420 flex-center flex-col">
