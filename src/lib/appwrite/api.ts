@@ -62,12 +62,3 @@ try {
     console.log(error);
 }
 }
-try {
-    const session = await account.createEmailSession(
-        user.email, user.password
-    )
-    return session
-} catch (error) {
-    console.log(error);
-}
-}
