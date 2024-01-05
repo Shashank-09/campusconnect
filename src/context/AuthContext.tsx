@@ -1,3 +1,4 @@
+import { getCurrentUser } from '@/lib/appwrite/api';
 import { IContextType, IUser } from '@/types';
 import {createContext, useContext, useEffect, useState} from 'react'
 
@@ -26,9 +27,48 @@ const AuthProvider = ({children} :{children : React.ReactNode}) => {
   const [ user, setUser] = useState<IUser>(INITIAL_STATE);
   const [isLoading, setIsLoading] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const checkAuthUser=()=>{
+    try{
+     const currentAccount = await getCurrentUser();
+
+     if(currentAccount){
+      setUser({
+        id: currentAccount.$id,
+        name: currentAccount.name,
+        username : currentAccount.username,
+        email: currentAccount.email,
+        imageUrl: currentAccount.imageUrl,
+        bio: currentAccount.bio
+      })
+
+      setIsAuthenticated(true);
+
+      return true;
+     }
+     return false;
+
+    }
+    catch(error){
+      console.log(error);
+    }finally{
+      setIsLoading(false);
+    }
+  }
+
+  useEffect
+
+  const value = {
+    user,
+    setUser,
+    isLoading,
+    isAuthenticated,
+    setIsAuthenticated,
+    checkAuthUser
+  }
   return (
     <AuthContext.Provider value={value}>
-
+{children}
     </AuthContext.Provider>
   )
 }
