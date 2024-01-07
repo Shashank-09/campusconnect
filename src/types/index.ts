@@ -55,3 +55,15 @@ export type INavLink = {
     username: string;
     password: string;
   };
+  export type INewUser = {
+    name: string;
+    email: string;
+    username: string;
+    password: string;
+  };
+  export type INewUser = {
+    name: string;
+    email: string;
+    username: string;
+    password: string;
+  };

@@ -144,7 +144,7 @@ To use this Application, please enter your details
           )}
         />
         <Button type="submit" className="shad-button_primary">
-          {isCreatingUser ? (
+          {  ? (
             <div className="flex-center gap-2"> <Loader/> Loading...</div>
           ): "Sign-up"}
         </Button>
