@@ -40,7 +40,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }){
   const [isLoading, setIsLoading] = useState(false);
 
   const checkAuthUser = async () => {
-    setIsLoading(true);
+    /////////////////////////////////////////////
+    setIsLoading(false);
     try {
       const currentAccount = await getCurrentUser();
       if (currentAccount) {
