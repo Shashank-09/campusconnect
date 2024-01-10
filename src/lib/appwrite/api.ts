@@ -1,5 +1,5 @@
 import { INewUser } from "@/types";
-import { account, appwriteConfig, avatars, databases } from "./config";
+import { account, appwriteConfig,avatars, databases } from "./config";
 import {ID} from 'appwrite'
 import { Query } from "appwrite";
 
@@ -10,7 +10,7 @@ export async function createUserAccount(user:INewUser) {
              user.email,
              user.password,
              user.name
-        );
+        )
 
         if(!newAccount) throw Error;
 
@@ -30,7 +30,7 @@ export async function createUserAccount(user:INewUser) {
     }
 }
 
-export async function savedUserToDB(user:{
+export async function saveUserToDB(user:{
     accountId: string;
     email: string;
     name: string;
@@ -44,7 +44,7 @@ try {
         ID.unique(),
         user,
     )
-    return newUser
+    return newUser;
 } catch (error) {
     console.log(error);
 }
@@ -57,7 +57,7 @@ export async function signInAccount(user:{
 try {
     const session = await account.createEmailSession(
         user.email, user.password
-    )
+    );
     return session
 } catch (error) {
     console.log(error);

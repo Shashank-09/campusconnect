@@ -2,9 +2,9 @@ import { Button } from "@/components/ui/button"
 import React from 'react'
 import { Link, useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod"
+// import * as z from "zod"
 
-
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage,} from "@/components/ui/form"
+import { Form, FormControl,  FormField, FormItem, FormLabel, FormMessage,} from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
 import {z} from "zod"
@@ -13,7 +13,7 @@ import { SignupValidation } from "@/lib/validation"
 import Loader from "@/components/shared/Loader"
 import { createUserAccount } from "@/lib/appwrite/api";
 import { useToast } from "@/components/ui/use-toast"
-import { useCreateUserAccount, useSignInAccount} from "@/lib/react-query/queriesAndMutations";
+import {  useCreateUserAccount,  useSignInAccount} from "@/lib/react-query/queriesAndMutations";
 import { useUserContext } from "@/context/AuthContext";
 
 
@@ -21,13 +21,15 @@ import { useUserContext } from "@/context/AuthContext";
 
 
 const SignupForm = () => {
+
+
   const {toast} = useToast();
   const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
    const navigate = useNavigate();
 
-    const {mutateAsync : createUserAccount , isLoading: isCreatingUser} = useCreateUserAccount();
+    const {mutateAsync : createUserAccount , isPending: isCreatingUser} = useCreateUserAccount();
 
-    const {mutateAsync : signInAccount , isLoading: isSigningIn} = useSignInAccountAccount();
+    const {mutateAsync : signInAccount , isPending: isSigningIn} = useSignInAccount();
 
 
    // 1. Define your form.
@@ -53,10 +55,10 @@ const SignupForm = () => {
     }
     const session= await signInAccount({
       email: values.email,
-      oassword : values.password,
+      password : values.password,
     });
     if(!session){
-      return toast({title :'Sign up failed ! Please try again'})
+      return toast({title :'Sign in failed ! Please try again'})
     }
 
     const isLoggedIn = await checkAuthUser();
@@ -88,9 +90,7 @@ To use this Application, please enter your details
               <FormControl>
                 <Input type="text" className="shad-input" {...field} />
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
+            
               <FormMessage />
             </FormItem>
           )}
@@ -104,9 +104,6 @@ To use this Application, please enter your details
               <FormControl>
                 <Input type="text" className="shad-input" {...field} />
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -120,9 +117,7 @@ To use this Application, please enter your details
               <FormControl>
                 <Input type="email" className="shad-input" {...field} />
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
+              
               <FormMessage />
             </FormItem>
           )}
@@ -136,17 +131,15 @@ To use this Application, please enter your details
               <FormControl>
                 <Input type="password" className="shad-input" {...field} />
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
+              
               <FormMessage />
             </FormItem>
           )}
         />
         <Button type="submit" className="shad-button_primary">
-          {  ? (
+          {  isCreatingUser ? (
             <div className="flex-center gap-2"> <Loader/> Loading...</div>
-          ): "Sign-up"}
+          ): ("Sign-up")}
         </Button>
         <p className="text-small-regular text-light-2 text-center mt-2">
            Already have an account?
