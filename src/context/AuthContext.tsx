@@ -33,15 +33,14 @@ type IContextType = {
 
 const AuthContext = createContext<IContextType>(INITIAL_STATE);
 
-export function AuthProvider({ children }: { children: React.ReactNode }){
+export function AuthProvider({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
   const [user, setUser] = useState<IUser>(INITIAL_USER);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const checkAuthUser = async () => {
-    /////////////////////////////////////////////
-    setIsLoading(false);
+    setIsLoading(true);
     try {
       const currentAccount = await getCurrentUser();
       if (currentAccount) {
@@ -68,15 +67,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }){
   };
 
   useEffect(() => {
-    // const cookieFallback = localStorage.getItem("cookieFallback");
+    const cookieFallback = localStorage.getItem("cookieFallback");
     if (
-      // cookieFallback === "[]" ||
-      // cookieFallback === null ||
-      // cookieFallback === undefined
-      localStorage.getItem('cookieFallback')==='[]' ||
-      localStorage.getItem('cookieFallback') ===null
-    ) navigate("/sign-in")
-    
+      cookieFallback === "[]" ||
+      cookieFallback === null ||
+      cookieFallback === undefined
+    ) {
+      navigate("/sign-in");
+    }
 
     checkAuthUser();
   }, []);
@@ -93,5 +91,4 @@ export function AuthProvider({ children }: { children: React.ReactNode }){
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
-export default AuthProvider;
 export const useUserContext = () => useContext(AuthContext);
